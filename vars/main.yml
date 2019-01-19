@@ -1,0 +1,10 @@
+---
+# vars file for opuk.iptables
+
+RedHat_packages:
+  - iptables
+  - iptables-services
+
+Debian_packages:
+  - iptables
+  - iptables-persistent

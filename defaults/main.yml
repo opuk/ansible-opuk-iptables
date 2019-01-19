@@ -1,0 +1,22 @@
+---
+# defaults file for opuk.iptables
+
+iptables_enable_nat: false
+
+iptables_allow_icmp: true
+
+iptables_allowed_tcp_ports:
+  - 22
+
+#iptables_allowed_tcp_ports_from:
+#  - port: 8443
+#    from: 127.0.0.1
+
+#iptables_allowed_udp_ports_from:
+#  - port: 53
+#    from: 127.0.0.1
+
+
+#iptables_allowed_udp_ports:
+
+#iptables_raw_rules

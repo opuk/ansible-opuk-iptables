@@ -1,0 +1,24 @@
+- name: detected el
+  set_fact:
+    iptables_packages:
+      - iptables
+      - iptables-services
+  when: ansible_os_family == "RedHat"
+
+- name: detected debian
+  set_fact:
+    iptables_packages:
+      - iptables
+      - iptables-persistent
+  when: ansible_os_family == "Debian"
+
+- name: set el variable
+  set_fact:
+    iptables_persist_rule_path: /etc/sysconfig/iptables
+  when: ansible_os_family == "RedHat"
+
+- name: set debian variable
+  set_fact:
+    iptables_persist_rule_path: /etc/iptables/rules.v4
+  when: ansible_os_family == "Debian"
+

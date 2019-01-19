@@ -1,0 +1,42 @@
+---
+# tasks file for opuk.iptables
+
+- import_tasks: detect_os_family.yml
+
+- name: remove firewalld
+  package:
+    name: firewalld
+    state: absent
+
+- name: install iptables
+  package:
+    name: "{{ iptables_packages }}"
+    state: present
+
+- name: configure iptables
+  template:
+    src: iptables.j2
+    dest: "{{ iptables_persist_rule_path }}"
+  notify: restart iptables
+
+- name: enable ip forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: yes
+  when: iptables_enable_nat == true
+
+- name: add debian service
+  template:
+    src: debian_iptables.service.j2
+    dest: /etc/systemd/system/iptables.service
+  when: ansible_os_family == "Debian"
+
+- name: start iptables
+  service:
+    name: iptables
+    state: started
+    daemon_reload: true
+    enabled: true
