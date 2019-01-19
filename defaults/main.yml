@@ -5,8 +5,8 @@ iptables_enable_nat: false
 
 iptables_allow_icmp: true
 
-iptables_allowed_tcp_ports:
-  - 22
+#iptables_allowed_tcp_ports:
+#  - 22
 
 #iptables_allowed_tcp_ports_from:
 #  - port: 8443
