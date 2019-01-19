@@ -1,6 +1,16 @@
 ---
 # tasks file for opuk.iptables
 
+- name: sanity check for some basic rules
+  assert:
+    that:
+      - iptables_allowed_tcp_ports or iptables_allowed_tcp_ports_from is defined
+    msg: |
+      you have not opened up TCP ports, this will lock you out from ssh 
+      if this is really what you want set iptables_i_know_what_im_doing=true
+  with_items: "{{ users | default([]) }}"
+  when: iptables_i_know_what_im_doing != true
+
 - import_tasks: detect_os_family.yml
 
 - name: remove firewalld
