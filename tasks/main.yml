@@ -4,12 +4,11 @@
 - name: sanity check for some basic rules
   assert:
     that:
-      - iptables_allowed_tcp_ports or iptables_allowed_tcp_ports_from is defined
+      - iptables_allowed_tcp_ports is defined or iptables_allowed_tcp_ports_from is defined
     msg: |
       you have not opened up TCP ports, this will lock you out from ssh 
-      if this is really what you want set iptables_i_know_what_im_doing=true
-  with_items: "{{ users | default([]) }}"
-  when: iptables_i_know_what_im_doing != true
+      if this is really what you want set iptables_I_know_what_im_doing=true
+  when: iptables_I_know_what_im_doing != "true" or iptables_I_know_what_im_doing is not defined
 
 - import_tasks: detect_os_family.yml
 
